@@ -7,5 +7,16 @@ body {
 }
 
 .form-box {
-  @apply grid grid-cols-10 items-baseline;
+  @apply grid grid-cols-2 md:grid-cols-10 md:items-baseline;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="time"], textarea, select {
+    @apply bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+}
+
+input[type="file"] {
+    @apply relative m-0 block w-full flex-auto rounded border border-solid border-slate-300 bg-slate-50 bg-clip-padding px-3 py-[0.32rem] text-slate-700 file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-slate-300 file:px-3 file:py-[0.32rem] file:text-slate-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-slate-200 focus:text-slate-900 focus:outline-none;
 }

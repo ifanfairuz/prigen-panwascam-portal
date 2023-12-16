@@ -11,11 +11,12 @@ import {
 
 const Container = ({ children }: PropsWithChildren) => {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-8">
+    <main className="flex min-h-screen flex-col items-center justify-between md:p-4 lg:p-8">
       <div className="max-w-5xl w-full bg-white p-8 rounded-xl shadow-xl">
-        <h1 className="text-2xl text-center font-bold mb-8">
-          Form A Generator
-        </h1>
+        <h1 className="text-2xl text-center font-bold">Form A LHP Generator</h1>
+        <p className="text-lg text-center mb-8">
+          Panwaslu Kelurahan/Desa se Kecamatan Prigen
+        </p>
         {children}
       </div>
     </main>
@@ -470,7 +471,7 @@ export default function FormAGeneratorPage() {
                 htmlFor="peristiwa_pelanggaran"
                 className="font-medium col-span-2"
               >
-                Peristiwa
+                Peristiwa Pelanggaran
               </label>
               <input
                 type="text"
@@ -524,7 +525,7 @@ export default function FormAGeneratorPage() {
                 htmlFor="nama_pelaku_pelanggaran"
                 className="font-medium col-span-2"
               >
-                Pelaku
+                Pelaku Pelanggaran
               </label>
               <input
                 type="text"
@@ -542,7 +543,7 @@ export default function FormAGeneratorPage() {
                 htmlFor="alamat_pelaku_pelanggaran"
                 className="font-medium col-span-2"
               >
-                Alamat
+                Alamat Pelanggaran
               </label>
               <input
                 type="text"
