@@ -412,7 +412,7 @@ export default function FormAGeneratorPage() {
         </div>
         <h3 className="text-lg font-bold mt-4 border-b">HASIL PENGAWASAN</h3>
         <div className="form-box">
-          <div className="col-span-2 flex md:flex-col gap-2 md:items-start">
+          <div className="col-span-2 flex md:flex-col gap-2 items-center md:items-start justify-between md:justify-start mb-2">
             <label htmlFor="uraian" className="font-medium">
               Uraian Hasil Pengawasan
             </label>
@@ -668,7 +668,7 @@ export default function FormAGeneratorPage() {
         )}
         <h3 className="text-lg font-bold mt-4 border-b">ANALISA PENGAWASAN</h3>
         <div className="form-box">
-          <div className="col-span-2 flex md:flex-col gap-2 md:items-start">
+          <div className="col-span-2 flex md:flex-col gap-2 items-center md:items-start justify-between md:justify-start mb-2">
             <label htmlFor="analisa" className="font-medium">
               Analisa Pengawasan
             </label>
