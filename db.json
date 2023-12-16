@@ -1,0 +1,20 @@
+{
+  "tahapan": [
+    {
+      "name": "Tahapan Pemutakhiran Data Pemilih (DPTb)",
+      "st": "217/PM.00.02/K.JI-20.10/09/2023"
+    },
+    {
+      "name": "Tahapan Kampanye Pemilu",
+      "st": "291/PM.00.02./JI-20.10/12/2023"
+    },
+    { "name": "Tahapan Pendistribusian Logistik", "st": "" },
+    {
+      "name": "Tahapan Pembentukan KPPS",
+      "st": "302/PM.00.02/K.JI-20.10/12/2023"
+    }
+  ],
+  "template_uraian": "Pada hari {hari} tanggal {tanggal_terbilang} bulan {nama_bulan} tahun {tahun_terbilang} Panwaslu Kelurahan/Desa {desa} telah melakukan {bentuk} di {tempat} guna {tujuan}.",
+  "template_analisa_lancar": "Bahwa dalam {bentuk} yang dilakukan Panwaslu Kelurahan/Desa {desa} di {tempat} telah berjalan dengan lancar dan tidak ditemukan adanya dugaan pelanggaran yang terjadi.",
+  "template_analisa_pelanggaran": "Bahwa dalam {bentuk} yang dilakukan Panwaslu Kelurahan/Desa {desa} di {tempat}."
+}

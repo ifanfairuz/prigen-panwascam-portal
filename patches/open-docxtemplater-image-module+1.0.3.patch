@@ -1,0 +1,13 @@
+diff --git a/node_modules/open-docxtemplater-image-module/js/index.js b/node_modules/open-docxtemplater-image-module/js/index.js
+index e064b2e..4b36a22 100644
+--- a/node_modules/open-docxtemplater-image-module/js/index.js
++++ b/node_modules/open-docxtemplater-image-module/js/index.js
+@@ -122,7 +122,7 @@ var ImageModule = function () {
+ 			if (!part.type === "placeholder" || part.module !== moduleName) {
+ 				return null;
+ 			}
+-			var tagValue = options.scopeManager.getValue(part.value);
++			var tagValue = options.scopeManager.getValue(part.value, { part });
+ 			if (!tagValue) {
+ 				return { value: this.fileTypeConfig.tagTextXml };
+ 			}
