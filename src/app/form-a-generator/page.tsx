@@ -275,6 +275,7 @@ export default function FormAGeneratorPage() {
             type="number"
             name="urut"
             id="urut"
+            min={1}
             value={formA.value.urut}
             onChange={(e) => formA.setString("urut", e.target.value)}
             placeholder="1"

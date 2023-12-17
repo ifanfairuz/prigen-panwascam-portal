@@ -74,4 +74,18 @@ declare global {
     buf: ArrayBuffer;
     size: [number, number];
   }
+
+  interface ImageModuleOption {
+    centered: boolean;
+    fileType: "docx" | "pptx";
+    getImage: (tagValue: ImageInput, tagName: string) => ArrayBuffer;
+    getSize: (
+      img: ArrayBuffer,
+      tagValue: ImageInput,
+      tagName: string
+    ) => [number, number];
+  }
+  export default class ImageModule {
+    constructor(opts: ImageModuleOption);
+  }
 }

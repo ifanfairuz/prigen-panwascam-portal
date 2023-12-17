@@ -23,6 +23,7 @@ RUN apt-get update -qq && \
 # Install node modules
 COPY --link bun.lockb package.json yarn.lock ./
 RUN bun install --frozen-lockfile --yarn
+RUN bunx patch-package
 
 # Copy application code
 COPY --link . .
@@ -32,7 +33,8 @@ RUN bun run build
 
 # Remove development dependencies
 RUN rm -rf node_modules && \
-    bun install --ci
+    bun install --ci && \
+    bunx patch-package
 
 
 # Final stage for app image
