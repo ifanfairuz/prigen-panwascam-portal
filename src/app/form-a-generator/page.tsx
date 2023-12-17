@@ -7,6 +7,7 @@ import {
   Fragment,
   PropsWithChildren,
   useEffect,
+  useState,
 } from "react";
 
 const Container = ({ children }: PropsWithChildren) => {
@@ -205,6 +206,7 @@ export default function FormAGeneratorPage() {
     ),
     data
   );
+  const [loading, setLoading] = useState(false);
 
   const formA = useFormA();
   const onTahapanChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -226,6 +228,11 @@ export default function FormAGeneratorPage() {
     }
   };
 
+  const genFormA = () => {
+    setLoading(true);
+    formA.genFormA().finally(() => setLoading(false));
+  };
+
   useEffect(() => {
     if (!loadingDB) {
       formA.setOptions({ desa: data.desa[0] });
@@ -245,6 +252,7 @@ export default function FormAGeneratorPage() {
           </label>
           <select
             name="desa"
+            disabled={loading}
             id="desa"
             value={formA.value.desa}
             onChange={(e) =>
@@ -275,6 +283,7 @@ export default function FormAGeneratorPage() {
             <input
               type="number"
               name="urut"
+              disabled={loading}
               id="urut"
               min={1}
               value={formA.value.urut}
@@ -294,6 +303,7 @@ export default function FormAGeneratorPage() {
           </label>
           <select
             name="tahapan"
+            disabled={loading}
             id="tahapan"
             value={formA.value.tahapan}
             onChange={onTahapanChange}
@@ -316,6 +326,7 @@ export default function FormAGeneratorPage() {
           <input
             type="text"
             name="surat_tugas"
+            disabled={loading}
             id="surat_tugas"
             value={formA.value.surat_tugas}
             onChange={(e) => formA.setString("surat_tugas", e.target.value)}
@@ -330,6 +341,7 @@ export default function FormAGeneratorPage() {
           <input
             type="text"
             name="bentuk"
+            disabled={loading}
             id="bentuk"
             value={formA.value.bentuk}
             onChange={(e) => formA.setString("bentuk", e.target.value)}
@@ -344,6 +356,7 @@ export default function FormAGeneratorPage() {
           <input
             type="text"
             name="tujuan"
+            disabled={loading}
             id="tujuan"
             value={formA.value.tujuan}
             onChange={(e) => formA.setString("tujuan", e.target.value)}
@@ -358,6 +371,7 @@ export default function FormAGeneratorPage() {
           <input
             type="text"
             name="sasaran"
+            disabled={loading}
             id="sasaran"
             value={formA.value.sasaran}
             onChange={(e) => formA.setString("sasaran", e.target.value)}
@@ -372,6 +386,7 @@ export default function FormAGeneratorPage() {
           <input
             type="date"
             name="tanggal"
+            disabled={loading}
             id="tanggal"
             value={formA.value.tanggal}
             onChange={onTanggalChange}
@@ -385,6 +400,7 @@ export default function FormAGeneratorPage() {
           <input
             type="time"
             name="jam_awal"
+            disabled={loading}
             id="jam_awal"
             value={formA.value.jam_awal}
             onChange={(e) => formA.setString("jam_awal", e.target.value)}
@@ -398,6 +414,7 @@ export default function FormAGeneratorPage() {
           <input
             type="time"
             name="jam_akhir"
+            disabled={loading}
             id="jam_akhir"
             value={formA.value.jam_akhir}
             onChange={(e) => formA.setString("jam_akhir", e.target.value)}
@@ -411,6 +428,7 @@ export default function FormAGeneratorPage() {
           <input
             type="text"
             name="tempat"
+            disabled={loading}
             id="tempat"
             value={formA.value.tempat}
             onChange={(e) => formA.setString("tempat", e.target.value)}
@@ -424,6 +442,7 @@ export default function FormAGeneratorPage() {
               Uraian Hasil Pengawasan
             </label>
             <button
+              disabled={loading}
               onClick={formA.genUraian}
               className="bg-green-400 hover:bg-green-500 text-green-800 px-4 py-2 rounded-full text-sm"
             >
@@ -432,6 +451,7 @@ export default function FormAGeneratorPage() {
           </div>
           <textarea
             name="uraian"
+            disabled={loading}
             id="uraian"
             value={formA.value.uraian}
             onChange={(e) => formA.setString("uraian", e.target.value)}
@@ -450,6 +470,7 @@ export default function FormAGeneratorPage() {
             <input
               type="radio"
               name="withPelanggaran"
+              disabled={loading}
               id="withPelanggaranY"
               className="mr-2"
               value="Y"
@@ -462,6 +483,7 @@ export default function FormAGeneratorPage() {
             <input
               type="radio"
               name="withPelanggaran"
+              disabled={loading}
               id="withPelanggaranN"
               className="mr-2"
               value="N"
@@ -483,6 +505,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="peristiwa_pelanggaran"
+                disabled={loading}
                 id="peristiwa_pelanggaran"
                 value={formA.value.peristiwa_pelanggaran}
                 onChange={(e) =>
@@ -501,6 +524,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="tempat_pelanggaran"
+                disabled={loading}
                 id="tempat_pelanggaran"
                 value={formA.value.tempat_pelanggaran}
                 onChange={(e) =>
@@ -519,6 +543,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="waktu_pelanggaran"
+                disabled={loading}
                 id="waktu_pelanggaran"
                 value={formA.value.waktu_pelanggaran}
                 onChange={(e) =>
@@ -537,6 +562,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="nama_pelaku_pelanggaran"
+                disabled={loading}
                 id="nama_pelaku_pelanggaran"
                 value={formA.value.nama_pelaku_pelanggaran}
                 onChange={(e) =>
@@ -555,6 +581,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="alamat_pelaku_pelanggaran"
+                disabled={loading}
                 id="alamat_pelaku_pelanggaran"
                 value={formA.value.alamat_pelaku_pelanggaran}
                 onChange={(e) =>
@@ -573,6 +600,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="nama_saksi_pelanggaran"
+                disabled={loading}
                 id="nama_saksi_pelanggaran"
                 value={formA.value.nama_saksi_pelanggaran}
                 onChange={(e) =>
@@ -591,6 +619,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="alamat_saksi_pelanggaran"
+                disabled={loading}
                 id="alamat_saksi_pelanggaran"
                 value={formA.value.alamat_saksi_pelanggaran}
                 onChange={(e) =>
@@ -609,6 +638,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="alat_bukti_pelanggaran"
+                disabled={loading}
                 id="alat_bukti_pelanggaran"
                 value={formA.value.alat_bukti_pelanggaran}
                 onChange={(e) =>
@@ -627,6 +657,7 @@ export default function FormAGeneratorPage() {
               <input
                 type="text"
                 name="barang_bukti_pelanggaran"
+                disabled={loading}
                 id="barang_bukti_pelanggaran"
                 value={formA.value.barang_bukti_pelanggaran}
                 onChange={(e) =>
@@ -644,6 +675,7 @@ export default function FormAGeneratorPage() {
               </label>
               <textarea
                 name="uraian_pelanggaran"
+                disabled={loading}
                 id="uraian_pelanggaran"
                 value={formA.value.uraian_pelanggaran}
                 onChange={(e) =>
@@ -662,6 +694,7 @@ export default function FormAGeneratorPage() {
               </label>
               <textarea
                 name="keterangan_pelanggaran"
+                disabled={loading}
                 id="keterangan_pelanggaran"
                 value={formA.value.keterangan_pelanggaran}
                 onChange={(e) =>
@@ -680,6 +713,7 @@ export default function FormAGeneratorPage() {
               Analisa Pengawasan
             </label>
             <button
+              disabled={loading}
               onClick={formA.genAnalisa}
               className="bg-green-400 hover:bg-green-500 text-green-800 px-4 py-2 rounded-full text-sm"
             >
@@ -688,6 +722,7 @@ export default function FormAGeneratorPage() {
           </div>
           <textarea
             name="analisa"
+            disabled={loading}
             id="analisa"
             value={formA.value.analisa}
             onChange={(e) => formA.setString("analisa", e.target.value)}
@@ -703,6 +738,7 @@ export default function FormAGeneratorPage() {
           <input
             type="date"
             name="tanggal_buat"
+            disabled={loading}
             id="tanggal_buat"
             value={formA.value.tanggal_buat}
             onChange={(e) => formA.setString("tanggal_buat", e.target.value)}
@@ -716,6 +752,7 @@ export default function FormAGeneratorPage() {
           <input
             type="file"
             name="dokumentasi"
+            disabled={loading}
             id="dokumentasi"
             className="col-span-8"
             multiple
@@ -730,6 +767,7 @@ export default function FormAGeneratorPage() {
           <input
             type="file"
             name="ttd"
+            disabled={loading}
             id="ttd"
             className="col-span-8"
             multiple
@@ -740,10 +778,30 @@ export default function FormAGeneratorPage() {
         <h3 className="text-lg font-bold mt-4 border-b"></h3>
         <div className="flex items-center justify-end gap-2">
           <button
-            onClick={formA.genFormA}
+            disabled={loading}
+            onClick={genFormA}
             className="bg-blue-400 hover:bg-blue-500 text-blue-800 px-4 py-2 rounded-full"
           >
-            GENERATE
+            {loading && (
+              <svg
+                aria-hidden="true"
+                role="status"
+                className="inline mr-2 w-4 h-4 animate-spin"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="#E5E7EB"
+                ></path>
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            )}
+            {loading ? "Loading..." : "GENERATE"}
           </button>
         </div>
       </div>

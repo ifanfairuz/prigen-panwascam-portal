@@ -42,6 +42,7 @@ const numbers = [
 ];
 
 const toText = (i: number | string) => numbers[parseInt(i.toString())] || "";
+
 export const terbilang = (number: string | number) => {
   const angka = number.toString();
   const len = angka.length;
