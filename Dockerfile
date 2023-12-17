@@ -21,9 +21,8 @@ RUN apt-get update -qq && \
     apt-get install -y build-essential pkg-config python-is-python3
 
 # Install node modules
-COPY --link bun.lockb package.json yarn.lock ./
-RUN bun install --frozen-lockfile --yarn
-RUN bunx patch-package
+COPY --link package.json ./
+RUN bun install
 
 # Copy application code
 COPY --link . .
@@ -33,8 +32,7 @@ RUN bun run build
 
 # Remove development dependencies
 RUN rm -rf node_modules && \
-    bun install --ci && \
-    bunx patch-package
+    bun install --ci
 
 
 # Final stage for app image

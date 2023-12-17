@@ -269,17 +269,23 @@ export default function FormAGeneratorPage() {
         </div>
         <div className="form-box">
           <label htmlFor="urut" className="font-medium col-span-2">
-            Nomor Urut
+            Nomor Urut Form A
           </label>
-          <input
-            type="number"
-            name="urut"
-            id="urut"
-            min={1}
-            value={formA.value.urut}
-            onChange={(e) => formA.setString("urut", e.target.value)}
-            placeholder="1"
-          />
+          <div className="col-span-8">
+            <input
+              type="number"
+              name="urut"
+              id="urut"
+              min={1}
+              value={formA.value.urut}
+              onChange={(e) => formA.setString("urut", e.target.value)}
+              placeholder="1"
+              className="max-w-[200px]"
+            />
+            <p className="text-sm text-slate-500">
+              * nomor urut disesuaikan nomor Form A masing masing
+            </p>
+          </div>
         </div>
         <h3 className="text-lg font-bold mt-4 border-b">PENGAWASAN</h3>
         <div className="form-box">

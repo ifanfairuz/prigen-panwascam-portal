@@ -75,13 +75,12 @@ class ImageModule {
     }
   }
   parse(placeHolderContent) {
-    const module = moduleName;
     const type = "placeholder";
     if (placeHolderContent.substring(0, 2) === "%%") {
       return {
         type,
         value: placeHolderContent.substr(2),
-        module,
+        module: moduleName,
         centered: true,
       };
     }
@@ -89,7 +88,7 @@ class ImageModule {
       return {
         type,
         value: placeHolderContent.substr(1),
-        module,
+        module: moduleName,
         centered: false,
       };
     }
