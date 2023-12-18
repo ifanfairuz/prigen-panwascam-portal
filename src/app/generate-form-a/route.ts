@@ -30,7 +30,6 @@ const toImageInput = async (image: File, size: ImageInput["size"]) =>
 const convertToPDF = (file: Buffer) =>
   new Promise<Buffer>((resolve, reject) => {
     convert(file, ".pdf", undefined, (err, data) => {
-      console.log(err, data);
       if (err) {
         reject(err);
         return;
