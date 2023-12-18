@@ -73,15 +73,23 @@ export const download = (blob: Blob, filename: string) => {
   }
 };
 
-export const fileToImage = (file: File) =>
-  new Promise<ImageInput>((res, rej) => {
+export function fileToImage(
+  file: File,
+  toBuffer: true
+): Promise<ImageInput<ArrayBuffer>>;
+export function fileToImage(
+  file: File,
+  toBuffer?: false
+): Promise<ImageInput<File>>;
+export function fileToImage(file: File, toBuffer?: boolean) {
+  return new Promise<ImageInput<File | ArrayBuffer>>((res, rej) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       let img = new Image();
       var uri = window.URL.createObjectURL(file);
       img.onload = function () {
         res({
-          buf: reader.result as ArrayBuffer,
+          buf: toBuffer ? (reader.result as ArrayBuffer) : file,
           size: [img.width, img.height],
         });
         window.URL.revokeObjectURL(uri);
@@ -91,3 +99,19 @@ export const fileToImage = (file: File) =>
     reader.onerror = (err) => rej(err);
     reader.readAsArrayBuffer(file);
   });
+}
+
+export const objectToFormData = (param: Record<string, any>) => {
+  const data = new FormData();
+  for (const key in param) {
+    const value = param[key];
+    if (Array.isArray(value)) {
+      for (const i in value) {
+        data.append(`${key}`, value[i]);
+      }
+    } else {
+      data.append(key, value);
+    }
+  }
+  return data;
+};

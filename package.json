@@ -6,14 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "patch-package"
+    "lint": "next lint"
   },
   "dependencies": {
     "date-fns": "^2.30.0",
     "docxtemplater": "^3.42.4",
+    "libreoffice-convert": "^1.5.1",
     "next": "14.0.4",
-    "patch-package": "^8.0.0",
     "pizzip": "^3.1.4",
     "react": "^18",
     "react-dom": "^18",

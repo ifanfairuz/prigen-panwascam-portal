@@ -70,8 +70,8 @@ declare global {
     tahapan?: Tahapan;
   }
 
-  interface ImageInput {
-    buf: ArrayBuffer;
+  interface ImageInput<B extends ArrayBuffer | File = ArrayBuffer> {
+    buf: B;
     size: [number, number];
   }
 
@@ -85,7 +85,56 @@ declare global {
       tagName: string
     ) => [number, number];
   }
-  export default class ImageModule {
+  class ImageModule {
     constructor(opts: ImageModuleOption);
+  }
+
+  type DocType = "pdf" | "docx";
+  interface DocParam {
+    nomor: string;
+    tahapan: string;
+    petugas: string;
+    desa: string;
+    st: string;
+    alamat_petugas: string;
+    bentuk: string;
+    tujuan: string;
+    sasaran: string;
+    hari: string;
+    tanggal: string;
+    jam_awal: string;
+    jam_akhir: string;
+    tempat: string;
+    uraian: string;
+    peristiwa_pelanggaran: string;
+    tempat_pelanggaran: string;
+    waktu_pelanggaran: string;
+    nama_pelaku_pelanggaran: string;
+    alamat_pelaku_pelanggaran: string;
+    nama_saksi_pelanggaran: string;
+    alamat_saksi_pelanggaran: string;
+    alat_bukti_pelanggaran: string;
+    barang_bukti_pelanggaran: string;
+    uraian_pelanggaran: string;
+    keterangan_pelanggaran: string;
+    analisa: string;
+    tanggal_buat: string;
+  }
+
+  interface GenerateParam<
+    Doc extends ArrayBuffer | File = ArrayBuffer,
+    Size = string,
+    Sizes = Size extends string ? Size : Size[]
+  > extends DocParam {
+    type: DocType;
+    ttd?: Doc | null;
+    ttd_size?: Size;
+    dokumentasi?: Doc[] | null;
+    dokumentasi_size?: Sizes;
+  }
+
+  interface RenderParam extends DocParam {
+    ttd?: ImageInput;
+    dokumentasi: ImageInput[];
   }
 }

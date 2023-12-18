@@ -1,19 +1,16 @@
 import { useState } from "react";
 import { formatID, parseDateInput } from "./date";
 import {
-  b64toBlob,
   download,
   fileToImage,
   fillContent,
   isEmpty,
+  objectToFormData,
   padLeft,
   title,
 } from "./content";
 import { terbilang } from "./terbilang";
 import { usePanwasData } from "@/context/DataContext";
-import PizZip from "pizzip";
-import Docxtemplater from "docxtemplater";
-import ImageModule from "@/image-module";
 
 export const useFormA = () => {
   const { data } = usePanwasData(false);
@@ -172,19 +169,13 @@ export const useFormA = () => {
     )}`;
   };
 
-  let template: Promise<ArrayBuffer> | undefined = undefined;
-  const getTemplate = () =>
-    (template =
-      template ||
-      fetch("/template/form-a.docx").then((res) => res.arrayBuffer()));
-
   const getValPelanggaran = (
     key: keyof Omit<FormAValue, "dokumentasi" | "ttd">
   ) => {
     return withPelanggaran ? value[key] || "-" : "-";
   };
 
-  const genFormA = async () => {
+  const genFormA = async (type: DocType) => {
     const mustCheck = [
       "desa",
       "urut",
@@ -229,39 +220,18 @@ export const useFormA = () => {
       return;
     }
 
-    const template = await getTemplate();
-    const zip = new PizZip(template);
-    const doc = new Docxtemplater(zip, {
-      paragraphLoop: true,
-      linebreaks: true,
-      modules: [
-        new ImageModule({
-          centered: false,
-          fileType: "docx",
-          getImage(value, name) {
-            return value.buf;
-          },
-          getSize(img, value, name) {
-            return name == "ttd"
-              ? [(value.size[0] / value.size[1]) * 70, 70]
-              : [500, (value.size[1] / value.size[0]) * 500];
-          },
-        } as ImageModuleOption) as any,
-      ],
-    });
-
     const tanggal = parseDateInput(value.tanggal);
-    const nomor = genNomorDoc(value.urut, value.desa, tanggal);
-    const ttd = value.ttd ? await fileToImage(value.ttd) : "";
+    const ttd = value.ttd ? await fileToImage(value.ttd) : undefined;
     const dokumentasi = await Promise.all(
       (value.dokumentasi || []).map((d) => fileToImage(d))
     );
-    const param = {
-      nomor,
+    const param: GenerateParam<File> = {
+      type,
+      nomor: genNomorDoc(value.urut, value.desa, tanggal),
       tahapan: value.tahapan,
       petugas: extension.desa?.petugas || "",
       desa: title(extension.desa?.name || ""),
-      st: extension.tahapan?.st || "-",
+      st: value.surat_tugas || "-",
       alamat_petugas: extension.desa?.alamat_petugas || "",
       bentuk: value.bentuk,
       tujuan: value.tujuan,
@@ -288,19 +258,26 @@ export const useFormA = () => {
         parseDateInput(value.tanggal_buat),
         "dd MMMM yyyy"
       ),
-      ttd,
-      dokumentasi,
+      ttd: ttd?.buf,
+      ttd_size: ttd?.buf ? JSON.stringify(ttd.size) : undefined,
+      dokumentasi: dokumentasi.map((d) => d.buf),
+      dokumentasi_size: JSON.stringify(dokumentasi.map((d) => d.size)),
     };
 
-    doc.render(param);
-    const base64 = doc
-      .getZip()
-      .generate({ type: "base64", compression: "DEFLATE" });
-    const blob = b64toBlob(
-      base64,
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    );
-    download(blob, `${nomor.replaceAll("/", "-")}.docx`);
+    return await fetch("/generate-form-a", {
+      method: "POST",
+      body: objectToFormData(param),
+    }).then(async (res) => {
+      const filename = res.headers
+        .get("Content-Disposition")
+        ?.split('filename="')
+        .pop()
+        ?.replace('"', "");
+      if (filename) {
+        const blob = await res.blob();
+        download(blob, filename);
+      }
+    });
   };
 
   return {
