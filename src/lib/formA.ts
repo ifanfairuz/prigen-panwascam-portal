@@ -11,6 +11,7 @@ import {
 } from "./content";
 import { terbilang } from "./terbilang";
 import { usePanwasData } from "@/context/DataContext";
+import axios from "axios";
 
 export const useFormA = () => {
   const { data } = usePanwasData(false);
@@ -194,29 +195,29 @@ export const useFormA = () => {
     ];
     for (const key of mustCheck) {
       if (isEmpty((value as any)[key])) {
-        alert("Mohon untuk melengkapi data " + key);
         (document.querySelector('[name="' + key + '"]') as any)?.focus();
+        alert("Mohon untuk melengkapi data " + key);
         return;
       }
     }
     if (!value.ttd) {
-      alert("Mohon untuk melengkapi foto ttd ");
       (document.querySelector('[name="ttd"]') as any)?.focus();
+      alert("Mohon untuk melengkapi foto ttd ");
       return;
     }
     if ((value.dokumentasi?.filter((d) => !!d).length || 0) < 1) {
-      alert("Mohon untuk melengkapi foto dokumentasi minimal 1, maksimal 2 ");
       (document.querySelector('[name="dokumentasi"]') as any)?.focus();
+      alert("Mohon untuk melengkapi foto dokumentasi minimal 1, maksimal 2 ");
       return;
     }
     if (
       value.uraian.trim() ===
       fillContent(data.db.template_uraian, genContentParam()).trim()
     ) {
+      (document.querySelector('[name="uraian"]') as any)?.focus();
       alert(
         "Mohon untuk melengkapi uraian pengawasan, jelaskan kegiatan pengawasan yang dilakukan."
       );
-      (document.querySelector('[name="uraian"]') as any)?.focus();
       return;
     }
 
@@ -267,17 +268,11 @@ export const useFormA = () => {
     return await fetch("/generate-form-a", {
       method: "POST",
       body: objectToFormData(param),
-    }).then(async (res) => {
-      const filename = res.headers
-        .get("Content-Disposition")
-        ?.split('filename="')
-        .pop()
-        ?.replace('"', "");
-      if (filename) {
-        const blob = await res.blob();
-        download(blob, filename);
-      }
-    });
+    })
+      .then((res) => res.blob())
+      .then((data) => {
+        download(data, param.nomor.replaceAll("/", "-") + "." + type);
+      });
   };
 
   return {

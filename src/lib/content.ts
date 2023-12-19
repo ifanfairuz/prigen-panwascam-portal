@@ -106,11 +106,19 @@ export const objectToFormData = (param: Record<string, any>) => {
   for (const key in param) {
     const value = param[key];
     if (Array.isArray(value)) {
-      for (const i in value) {
-        data.append(`${key}`, value[i]);
+      for (const val of value) {
+        if (val instanceof File) {
+          data.append(`${key}`, val, val.name);
+        } else {
+          data.append(`${key}`, val);
+        }
       }
     } else {
-      data.append(key, value);
+      if (value instanceof File) {
+        data.append(key, value, value.name);
+      } else {
+        data.append(key, value);
+      }
     }
   }
   return data;

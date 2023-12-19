@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.6.2",
     "date-fns": "^2.30.0",
     "docxtemplater": "^3.42.4",
     "libreoffice-convert": "^1.5.1",
